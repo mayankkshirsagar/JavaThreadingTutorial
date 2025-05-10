@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
 
-public class SumOfIntStream {
+public class SumOfIntStreamCallableExample {
 
     public static int[] intstream = IntStream.rangeClosed(0, 5000).toArray();
     public static int sum = IntStream.rangeClosed(0, 5000).sum();
@@ -76,6 +76,15 @@ public class SumOfIntStream {
         System.out.println("intStream sum : " + sum);
         System.out.println("computed sum : " + computedSum);
         System.out.println("total time : " + (endTime - startTime));
+
+        // shutdown executor service,
+        // If you don’t call shutdown() (or shutdownNow()),
+        // the ExecutorService keeps running in the background,
+        // even after your main method finishes.
+        // ExecutorService creates non-daemon threads
+        // Non-daemon threads keep the Java process alive.
+        // The JVM does not exit until all non-daemon threads finish.
+        // try by commenting the shutdown, program remains still active even after execution completion
         executorService.shutdown();
     }
 }
