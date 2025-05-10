@@ -1,11 +1,13 @@
-JAVA TUTORIAL
+java tutorial 
 
-LOAD IN INTELLIJ AS JAVA PROJECT, WAS DONE USING JDK21
+load in intellij as java project, was done using jdk21 
 
-SOURCE : https://www.udemy.com/course/java-multi-threading-programming/
+source : https://www.udemy.com/course/java-multi-threading-programming/ 
 
-CONSISTING OF TOPICS ->
+consisting of topics -> 
 
-MULTI THREADING
+multi threading 
 
-LAMBDA EXPRESSION
+lambda expression 
+
+todo : add executor service, completable future etc

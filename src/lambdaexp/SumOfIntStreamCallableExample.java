@@ -30,7 +30,7 @@ public class SumOfIntStreamCallableExample {
             return sum;
         };
 
-        // service which manages running threaded tasks
+        // service which manages running threaded tasks, setting threads to 1 makes it sequential
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
         long startTime = System.currentTimeMillis();
