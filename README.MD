@@ -1,4 +1,4 @@
-source : https://www.udemy.com/course/java-multi-threading-programming/
+Tutorial source : https://www.udemy.com/course/java-multi-threading-programming/
 
 ---
 
