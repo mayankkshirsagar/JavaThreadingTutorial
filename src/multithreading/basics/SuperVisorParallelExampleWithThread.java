@@ -6,7 +6,9 @@ import java.util.Comparator;
  * parallel solution using threads
  */
 public class SuperVisorParallelExampleWithThread {
+
     public static void main(String[] args) {
+
         ParallelWorker1 p1 = new ParallelWorker1();
         ParallelWorker2 p2 = new ParallelWorker2();
 
@@ -36,6 +38,7 @@ public class SuperVisorParallelExampleWithThread {
 
 // extend thread class and override the run method and call the start() on the worker
 class ParallelWorker1 extends Thread {
+
     public void executeWork() throws InterruptedException { // need to either throw exception or handle in try catch
         for(int i = 0 ;i<10; i++) {
             Thread.sleep(100);
@@ -55,6 +58,7 @@ class ParallelWorker1 extends Thread {
 
 // extend thread class and override the run method
 class ParallelWorker2 extends Thread {
+
     public void executeWork() {
         for(int i = 0 ;i<10; i++) {
             try { // need to either throw exception or handle in try catch
