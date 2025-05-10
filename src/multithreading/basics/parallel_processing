@@ -1,0 +1,6 @@
+SuperVisor Sequential example, workers were executing tasks in sequence, worker2 was waiting for worker1 to finish
+to improve this we can parallelize the workers
+Java provides 2 ways to do this
+1. extend Thread Class
+    extend thread class, override run() method and call the start();
+2. implement runnable interface

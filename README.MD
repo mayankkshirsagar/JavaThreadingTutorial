@@ -1,0 +1,11 @@
+JAVA TUTORIAL
+
+LOAD IN INTELLIJ AS JAVA PROJECT, WAS DONE USING JDK21
+
+SOURCE : https://www.udemy.com/course/java-multi-threading-programming/
+
+CONSISTING OF TOPICS ->
+
+MULTI THREADING
+
+LAMBDA EXPRESSION

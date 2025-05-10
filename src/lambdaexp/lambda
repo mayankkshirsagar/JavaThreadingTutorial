@@ -1,0 +1,47 @@
+a lambda expression is an anonymous function, its a function without name and does not belong to any class
+
+a java method/function has mainly these components
+method name
+parameter list
+body
+return type
+
+lambda expression has
+no name : anonymous function
+parameter list
+body
+no return type :
+    no need to mention the return type in lambda expression, java compiler is able to figure out the return type
+    by checking the code
+
+lambda expression components
+1. () input parameters
+2. ->  Arrow, denoting lambda
+3. {} lambda body
+
+lambda is mainly used to implement functional interfaces, Any interface with a SAM (single abstract method) is a functional
+interface, and its implementation maybe treated as lambda expression
+
+@FunctionalInterface
+public interface Runnable {
+    /**
+     * Runs this operation.
+     */
+    void run();
+}
+
+@FunctionalInterface
+public interface Comparator<T> {
+    int compare(T o1, T o2);
+}
+
+@FunctionalInterface
+public interface Callable<V> {
+    /**
+     * Computes a result, or throws an exception if unable to do so.
+     *
+     * @return computed result
+     * @throws Exception if unable to compute a result
+     */
+    V call() throws Exception;
+}}

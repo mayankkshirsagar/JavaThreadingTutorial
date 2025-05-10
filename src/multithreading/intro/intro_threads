@@ -1,0 +1,8 @@
+states of a thread / thread life cycle
+
+1. NEW : Thread t = new Thread();
+2. RUNNABLE : t.start(); thread instance given to scheduler for execution
+3. RUNNING : when thread starts to run
+4. BLOCKED : thread is temporarily inactive , ex. when lock is obtained on a resource by another thread causing a thread to block
+5. WAITING : thread is waiting , ex waiting for notify from another thread, or waiting for a timeout period
+6. DEAD : thread terminated after finishes execution
