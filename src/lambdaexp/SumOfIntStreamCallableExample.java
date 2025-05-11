@@ -12,6 +12,20 @@ public class SumOfIntStreamCallableExample {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
+        /**
+        Callable<Integer> callable = new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int sum = 0;
+                for (int i = 0;i< intstream.length/2; i++) {
+                    Thread.sleep(1);
+                    sum += intstream[i];
+                }
+                return sum;
+            }
+        };
+         */
+
         Callable<Integer> callable1 = () -> {
             int sum = 0;
             for (int i = 0;i< intstream.length/2; i++) {
@@ -31,11 +45,11 @@ public class SumOfIntStreamCallableExample {
         };
 
         // service which manages running threaded tasks, setting threads to 1 makes it sequential
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
 
         long startTime = System.currentTimeMillis();
 
-        List<Callable<Integer>> callables = Arrays.asList(callable1, callable2);
+        List<Callable<Integer>> callables = Arrays.asList(callable1, callable2); // Arrays.asList(callable, callable2);
         List<Future<Integer>> futureSumList = executorService.invokeAll(callables);
 
 //         or
