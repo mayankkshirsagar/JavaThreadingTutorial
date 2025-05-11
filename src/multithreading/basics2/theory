@@ -19,3 +19,33 @@ and always read from main memory
 downside is cache is faster than main memory so access to volatile var is more time consuming
 Read and write for all volatile variables are atomic, but its misconception that just volatile will make all operations atomic
 we still need to ensure exclusive access / thread safety using synchronized methods or blocks
+
+DEADLOCK
+deadlock is a situation when threads are waiting for each other to release the lock
+there may be a case where t1 is waiting for a lock held by t2, and t2 is waiting for a lock held by t1, causing deadlock
+example case
+1.student account is transferring fees to university account for upcoming semester
+2.university account is transfering scholarship fee to student account
+3.thread t1 which will transfer from student to univ, tries lock on student account, and gets it as there is no lock on it
+4.thread t2 which will transfer from univ to student, tries lock on univ account, and gets it as there is no lock on it
+5.thread t1, now wait for univ account lock, but its occupied by t2
+6.thread t2, now wait for student account lock, but its occupied by t1
+7.causing a deadlock
+
+LIVELOCK
+livelock is like deadlock in sense that two or more processes are blocking each other, but are actively trying to resolve the
+problem on its own (like reverting back and retry), livelock happens when these efforts to resolve the problem make it impossible
+to ever terminate
+example of livelock
+husband and wife eating soup but have only one spoon, and both are too polite and will return the spoon to other if
+other person has not eaten yet
+Another example is 2 people attempting to pass in a 2 lane corridor and both are on same side, on blocking
+PersonA moves to his left lane, while PersonB moves to his right, causing again a block, and PersonA again going to right
+and PersonB going to left causing again a block
+
+Livelock with student/univ example
+say t1, takes money out of student account , t2 takes out money from univ acc,
+t1 sees univ acc is blocked, and transfers money back to student acc
+t2 sees student acc is blocked and transfer money back to univ acc
+retries the same
+
