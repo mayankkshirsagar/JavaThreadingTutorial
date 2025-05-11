@@ -1,0 +1,21 @@
+synchronized allows thread safety for a method, allowing only 1 thread to access it at a time
+
+public static synchronized void add();
+
+Join allows one thread to wait for another thread to finish, join also comes with a overload method which takes timeout period
+to avoid program waiting for indefinite time if the other thread gets stuck/waiting/blocked for indefinite time.
+Join throws interruptedException if reference thread is interrupted
+if referenced thread unable to start or already terminated, join will return immediately
+
+psvm { // main thread lets call m1
+...
+Thread t1 = new Thread();
+t1.join(); // m1 waits for t1 to finish
+}
+
+Volatile:
+Volatile keyword for a variable (not defined for method or classes) is to indicate to compiler/thread to not cache value of variable
+and always read from main memory
+downside is cache is faster than main memory so access to volatile var is more time consuming
+Read and write for all volatile variables are atomic, but its misconception that just volatile will make all operations atomic
+we still need to ensure exclusive access / thread safety using synchronized methods or blocks
