@@ -1,0 +1,210 @@
+Java synchronization provided capability to control access of multiple threads to a shared resource
+when we have multiple threads working on a shared resource, they all can modify the shared resource in parallel which can result
+in an inconsistent state,
+we can use synchronization to serialize the access to the shared resource by multiple threads
+
+we use synchronization
+1. To prevent interference from multiple threads
+2. To avoid inconsistency issues
+
+Thread synchronization types
+2 types
+
+1. Mutual Exclusive
+    1. Synchronized methods
+    2. Synchronized blocks
+    3. static synchronization
+2. Cooperative (interthread communication)
+    1. wait();
+    2. notify();
+    3. notifyAll();
+
+
+
+Mutually Exclusive
+Synchronization modifier in java is used for mutually exclusive locks,
+with help of Synchronization modifier we can restrict the access to a shared resource to only one thread at a time
+there are 3 ways to use the Synchronization modifier.
+    1. Synchronized methods
+    2. Synchronized blocks
+    3. static synchronization
+
+if an object or block is declared as synchronized, than only one thread can access that object or block at a time
+No other thread can take that object or block until its available
+
+Synchronization is built around an internal entity known as intrinsic lock or monitor lock
+every object has an intrinsic lock associated with it
+A thread that needs exclusive and consistent access to a object must acquire its intrinsic lock before accessing them
+and release the lock when done using
+
+Intrinsic lock
+Every object in JVM internally has a intrinsic lock, Synchronized keyword tries to acquire lock of that targeted object
+
+Synchronized method intrinsic lock:
+1. Synchronized instance method
+the implicit lock is 'this', which is the object used to invoke the method, each instance of the class will use their own lock
+Ex a new instance of class , has 3 methods A,B,C, 2 are synchronized A,B while C is not, we have 2 threads
+if t1 is calling A and t2 is calling C : possible no issue,
+if t1 is calling A and now t2 is calling B : t2 can not, since lock has acquired on object by method A
+
+2. Synchronized static method
+The lock is at the class level, all instance of class will use the same method.
+
+Diff between static sync vs sync :
+synchronized instance method
+public synchronized void instanceMethod() {
+    // critical section
+}
+Lock is on: the instance (object) of the class.
+Effect: Only one thread per instance can execute any synchronized instance method at a time.
+Use case: You want thread safety per object.
+MyClass obj1 = new MyClass();
+MyClass obj2 = new MyClass();
+Thread t1 = new Thread(() -> obj1.instanceMethod());
+Thread t2 = new Thread(() -> obj2.instanceMethod());
+Here, t1 and t2 can execute simultaneously because they lock on different objects (obj1 and obj2).
+
+synchronized static method:
+public static synchronized void staticMethod() {
+    // critical section
+}
+Lock is on: the Class object (i.e., MyClass.class).
+Effect: Only one thread across all instances can execute any synchronized static method at a time.
+Use case: You want thread safety across all instances or for shared static resources.
+Thread t1 = new Thread(() -> MyClass.staticMethod());
+Thread t2 = new Thread(() -> MyClass.staticMethod());
+Here, t1 and t2 cannot run at the same time because they both try to acquire the class-level lock.
+
+Even if we use object to call static method, lock is still at class not at the object
+class MyClass {
+    public static synchronized void staticMethod() {
+        // Lock: MyClass.class
+    }
+
+    public synchronized void instanceMethod() {
+        // Lock: this (the object)
+    }
+}
+MyClass obj1 = new MyClass();
+MyClass obj2 = new MyClass();
+obj1.staticMethod(); // Lock on MyClass.class
+obj2.staticMethod(); // Still lock on MyClass.class — same lock as above
+So, calling a static synchronized method with an object might look like it's object-related,
+but under the hood, it’s not. It locks at the class level, no matter how it's called.
+Best Practice:
+Call static methods using the class name (e.g., MyClass.staticMethod()) to make the code clearer and less misleading.
+
+Synchronized block intrinsic lock
+implicit lock can be instance or class
+in sync block we define which variable or object we want lock on.
+A synchronized block in Java lets you synchronize only a specific section of code rather than the entire method,
+giving you more fine-grained control over locking.
+
+synchronized (lockObject) {
+    // Critical section
+}
+lockObject is any Java object that will act as the monitor.
+Only one thread can execute a synchronized block guarded by the same object at a time.
+class Counter {
+    private int count = 0;
+    private final Object lock = new Object();
+
+    public void increment() {
+        // only this block is synchronized
+        synchronized (lock) {
+            count++;
+        }
+    }
+
+        // example for same using sync method instead of block , Entire method is synchronized (locks on 'this')
+        // public synchronized void increment() {
+        //    count++;
+        // }
+
+    public int getCount() {
+        return count;
+    }
+}
+public class SyncBlockExample {
+    public static void main(String[] args) {
+        Counter counter = new Counter();
+
+        // Create two threads that increment the counter 1000 times each
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.increment();
+            }
+        });
+
+        // Start both threads
+        t1.start();
+        t2.start();
+
+        // Wait for both threads to finish
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Final count should be 2000
+        System.out.println("Final Count: " + counter.getCount());
+    }
+}
+Explanation:
+Shared resource: count
+Lock object: a private final Object lock = new Object();
+Both threads call increment() 1000 times → total should be 2000.
+Without synchronization, this could result in a smaller number due to race conditions.
+
+Example using class as lock
+class Counter {
+    private static int count = 0;
+
+    public void increment() {
+        synchronized (Counter.class) {
+            count++;
+        }
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+public class ClassLockExample {
+    public static void main(String[] args) {
+        Counter c1 = new Counter();
+        Counter c2 = new Counter();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                c1.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                c2.increment();
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Final Count: " + c1.getCount());  // Should be 2000
+    }
+}
