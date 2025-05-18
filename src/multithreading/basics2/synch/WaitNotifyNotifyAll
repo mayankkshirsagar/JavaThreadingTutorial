@@ -1,0 +1,13 @@
+Wait, notify and notifyAll are used for thread communication via a common object, this common object is considered
+a medium for inter thread communication via these methods
+these methods needs to be called from a synchronized context otherwise an illegalMonitorStateException is thrown
+
+wait() : when you call wait on an object, it tells the thread to give up the lock and go to sleep state until some other
+threads enter in same monitor and call notify or notifyAll. Wait basically release the lock and waits
+
+notify(): when you call notify on an object, it wakes one thread waiting for the object, if multiple threads are waiting
+for the object it will cal one of them. Depending on os implementation it will call one of the waiting threads.
+
+notifyAll(): nofityAll will wake all threads waiting on the object, which thread will be called first depends on thread
+priority and os implementation
+
