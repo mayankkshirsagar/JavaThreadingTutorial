@@ -50,7 +50,7 @@ public class FastFoodRestaurant {
 
     public void buyBurgerWithSyncBlock(String clientName) {
         synchronized (this) {
-            // lock is at object level, so only 1 thead gets access to this object lock
+            // lock is at object level, so only 1 thread gets access to this object lock
             longRunningProcess();
             this.lastClientName = clientName;
             numberOfBurgerSold++;
@@ -60,7 +60,7 @@ public class FastFoodRestaurant {
 
     public synchronized void buyBurgerWithSyncMethod(String clientName) {
         // if we remove the sync keyword, burger count may not match 5
-        // since numberOfBurgerSold is accessed by all thread simutaneously it may end in inconsistent state
+        // since numberOfBurgerSold is accessed by all thread simultaneously it may end in inconsistent state
         longRunningProcess();
         this.lastClientName = clientName;
         numberOfBurgerSold++;
