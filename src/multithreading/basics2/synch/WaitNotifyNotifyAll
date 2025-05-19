@@ -8,6 +8,6 @@ threads enter in same monitor and call notify or notifyAll. Wait basically relea
 notify(): when you call notify on an object, it wakes one thread waiting for the object, if multiple threads are waiting
 for the object it will cal one of them. Depending on os implementation it will call one of the waiting threads.
 
-notifyAll(): nofityAll will wake all threads waiting on the object, which thread will be called first depends on thread
+notifyAll(): notifyAll() will wake all threads waiting on the object, which thread will be called first depends on thread
 priority and os implementation
 
