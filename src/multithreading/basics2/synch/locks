@@ -1,0 +1,25 @@
+lock is a thread synchronization mechanism like synchronized blocks , except locks can be more sophisticated than sync blocks
+Lock is an interface in java, we need to use one of its implementation to use locks in application , ex ReentrantLock
+
+Diff between lock and sync block
+sync block does not provide a timeout, using lock.trylock(long timeout, timeunit t) it is possible to add timeout
+sync block must be implemented in a single method, a lock can have its call to lock and unlock in seperate methods
+
+Reentrantlock
+Reentrantlock allows thread to enter a lock resource more than once
+when the thread first enters into a lock, a hold count is set to 1
+before unlocking, the thread can reenter the lock again and everytime the hold count is incremented by 1
+for every unlock request, hold count is decremented by 1,
+when the hold count is 0, resource is unlocked
+
+Reentrant lock also offer a fairness parameter, by which lock would abide by order of lock request, when the thread
+unlocks a resource, lock goes to thread waiting for the longest time, fairness mode is set by passing true to constructor
+of the lock
+
+reentrant lock methods
+lock() : call to the lock(), increments the hold count by 1 and gives the lock if shared resource is free
+unlock() : call to unlock(), decrements the hold count by 1, and when count is 0, releases the resource
+trylock(): if a shared resource is available, it will lock it and increment counter by 1, if not available,it will exit
+instead of waiting
+trylock(long timeout, timeunit unit) : thread will wait for a certain amout of time before exiting if lock is not available
+
