@@ -52,6 +52,7 @@ public class BankTransfer {
                 while (!deposit(amount)) {
                     continue;
                 }
+                System.out.println("refunding amount completed to " + this.accountName);
             }
         }
         return false;
