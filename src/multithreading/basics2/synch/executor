@@ -1,0 +1,38 @@
+managing few threads is easy, but its difficult maintaining and managing 100s and 1000s threads running in parallel
+Executor framework help you in creating and managing threads in an application
+the main important feature of this framework is the seperation of concern , it lets user create task framework decides
+where , when and how to execute task on the thread
+
+How do executor work
+the work of an executor is to execute task
+executor picks up a thread from thread pool to execute a task
+if thread is not available , new threads can not be created and executor stores these threads in a queue
+a task can also be removed from a queue
+
+thread pool executor
+executor is the base interface of executor framework and has only one method execute
+executor service and scheduled executor service are two other interfaces which extend executor
+Thread pool executor is an implementation of executorservice interface,
+it executes a given task using one of its internal pool thread
+
+Thread Pool executors
+1. Fixed thread pool executor, creates a fixed number of thread in a pool, any task higher than thread needs to wait for thread to become free
+ThreadPoolExecutor tpr = Executors.newFixedThreadPool(5);
+2. Cached thread pool executor, create thread pool which can create new threads as needed, it will reuse previously constructed threads
+when they are available, but this needs caution, as it can bring down entire system if not handled
+ThreadPoolExecutor tpr = Executors.newCachedThreadPool();
+3. scheduled thread pool executor, create a thread pool, that can run schedule tasks to run after a delay or execute periodically
+tpr = Executors.newScheduledThreadPool(10);
+4. Single thread pool executor, create single thread to execute all task, use it when only 1 task is there to run
+Executors.newSingleThreadExecutor();
+5. work stealing thread executor : creates a thread pool that maintains enough thread to support the given parallelism level
+Executors.newWorkStealingThreadPool(5);
+
+
+how to give task to executor service
+execute (Runnable) : takes runnable implementation and execute it in async (generally used for void methods)
+submit (Runnable) : takes Runnable implementation and returns a future object ,
+the future object can be used to check if the runnable has finished executing
+submit (callable) : takes Runnable implementation and returns a future object
+invokeAny(): takes a collection of callables and return result of any one of the callables (does not return future, direct result)
+invokeAll(): invokes all callable objects passed , returns future of each callable
