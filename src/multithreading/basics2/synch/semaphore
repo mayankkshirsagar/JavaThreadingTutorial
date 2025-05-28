@@ -1,0 +1,13 @@
+Semaphore is a class in java.util.concurrent package
+semaphores are used to restrict number of threads access to a resource
+semaphores maintain a set of permits through use of counter
+to access the resource the thread muse be granted a permit from semaphore
+if counter  > 0, access is allowed, if it is 0, access is denied
+if counter > 0, permit is granted to resource and count is decremented
+other wise the thread is block until a permit is acquired
+thread releaes the permit when it no longer needs the resource and thereby increasing the counter
+if a thread is waiting for permit, it will acquire permit and continue its execution
+
+Example of semaphores
+restricting number of connections to database
+bounding a collection
