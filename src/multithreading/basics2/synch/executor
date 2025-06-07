@@ -34,5 +34,7 @@ execute (Runnable) : takes runnable implementation and execute it in async (gene
 submit (Runnable) : takes Runnable implementation and returns a future object ,
 the future object can be used to check if the runnable has finished executing
 submit (callable) : takes Runnable implementation and returns a future object
+    use .get() on future to get the result , if not done when called, it will wait
+    use .isDone() on future to check if its complete
 invokeAny(): takes a collection of callables and return result of any one of the callables (does not return future, direct result)
 invokeAll(): invokes all callable objects passed , returns future of each callable
